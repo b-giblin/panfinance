@@ -40,13 +40,19 @@ def fetch_and_plot():
 app = Tk()
 app.title("Stock Visualizer")
 
-label = Label(app, text="Enter Stock Ticker:")
+# Colors and Styles
+bg_color = "#2C3E50"
+text_color = "#ECF0F1"
+button_color = "#2980B9"
+app.configure(bg=bg_color)
+
+label = Label(app, text="Enter Stock Ticker:", fg=text_color, bg=bg_color)
 label.pack(padx=20, pady=5)
 
-ticker_entry = Entry(app)
+ticker_entry = Entry(app, bg=text_color, fg=bg_color)
 ticker_entry.pack(padx=20, pady=5)
 
-submit_button = Button(app, text="Fetch & Visualize", command=fetch_and_plot)
+submit_button = Button(app, text="Fetch & Visualize", command=fetch_and_plot, bg=button_color, fg=text_color)
 submit_button.pack(padx=20, pady=20)
 
 app.mainloop()
