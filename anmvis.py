@@ -2,6 +2,7 @@ import yfinance as yf
 import pandas as pd
 import matplotlib.pyplot as plt
 from matplotlib.animation import FuncAnimation
+from tkinter import Tk, Label, Button, Entry
 
 def fetch_stock_data(ticker_symbol, period='1y'):
     stock_data = yf.download(ticker_symbol, period=period) 
@@ -28,11 +29,24 @@ def visualize_stock_data(dataframe, title):
     ani = FuncAnimation(fig, animate, frames=len(dataframe), fargs=(dataframe, line), repeat=False)
     plt.show()
 
-def main():
-    ticker = input("Enter the stock ticker symbol (e.g. GOOGL for Google): ")
-    data = fetch_stock_data(ticker)
-    add_rolling_average(data)
-    visualize_stock_data(data, title=f"{ticker} Stock Data with 7-day rolling average")
+# Tkinter functions
+def fetch_and_plot():
+    ticker_symbol = ticker_entry.get()
+    stock_data = fetch_stock_data(ticker_symbol)
+    add_rolling_average(stock_data)
+    visualize_stock_data(stock_data, f"Stock Visualization for {ticker_symbol}")
 
-if __name__ == "__main__":
-    main()
+# GUI setup
+app = Tk()
+app.title("Stock Visualizer")
+
+label = Label(app, text="Enter Stock Ticker:")
+label.pack(padx=20, pady=5)
+
+ticker_entry = Entry(app)
+ticker_entry.pack(padx=20, pady=5)
+
+submit_button = Button(app, text="Fetch & Visualize", command=fetch_and_plot)
+submit_button.pack(padx=20, pady=20)
+
+app.mainloop()
